@@ -6,18 +6,8 @@
     console.log(posts)
     const choosePost = (postId) => {
         console.log(postId)
-        dispatch('/choose-post', postId)
-        fetch("/choose-post", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then((result)=>{
-            console.log("fetch in svelte 1: ", result)
-            return result.json()
-        }).then((result)=> {
-            console.log("fetch in svelte 2: ", result.body)
-        })
+        dispatch('choose-post', postId)
+        
     }
 </script>
 

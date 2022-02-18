@@ -43,6 +43,14 @@
 		console.log("event.detail: " , e.detail)
 		chosenId = e.detail;
 		chosenPost = posts[e.detail-1]
+
+		fetch("/select-post"
+        ).then((result)=>{
+            console.log("fetch in svelte 1: ", result)
+            return result.json()
+        }).then((result)=> {
+            console.log("fetch in svelte 2: ", result)
+        })
 	}
 	const exitPost = () => {
 		chosenId = false;
