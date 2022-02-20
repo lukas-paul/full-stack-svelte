@@ -10,9 +10,9 @@
 
 <div class="indiv-post">
     <div class="post-center">
-        <div class="name">User: {chosenPost.userName}</div>
+        <div class="name">User: {chosenPost.username}</div>
         <div class="headline">Title: {chosenPost.headline}</div>
-        <div class="text">Post: {chosenPost.text}</div>
+        <div class="text">Post: {chosenPost.post}</div>
     <button class="exit-button" on:click={exitPost}>X</button>
     </div>
 </div>

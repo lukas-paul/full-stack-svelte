@@ -1,9 +1,13 @@
 <script>
     import {createEventDispatcher} from 'svelte';
     const dispatch = createEventDispatcher();
-    export let posts;
+    import { onMount } from "svelte"
+
+    export let posts = [];
+
+    
    
-    console.log(posts)
+    console.log("posts: ", posts)
     const choosePost = (postId) => {
         console.log(postId)
         dispatch('choose-post', postId)
@@ -14,7 +18,7 @@
 <div class="blackboard">
 {#each posts as post (post.id)}
     <div class="post" on:click={choosePost(post.id)}>
-        <p>{post.userName}</p>
+        <p>{post.username}</p>
         <p>{post.headline}</p>
     </div>  
 {/each}
