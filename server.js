@@ -38,7 +38,9 @@ app.post("/add-new-post", (req, res) => {
     let title = req.body.title;
     let text = req.body.text;
 
-    db.newPost(name, city, title, text);
+    db.newPost(name, city, title, text).then(() => {
+        res.json({ success: "post added to db" });
+    });
 });
 
 /*

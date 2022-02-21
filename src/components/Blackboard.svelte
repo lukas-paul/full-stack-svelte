@@ -31,13 +31,18 @@
         display: flex;
         justify-content: space-around;
         flex-direction: row;
+        flex-wrap: wrap;
     }
 
-    .post {
-        height: 200px;
-        width: 200px;
+    .post {     
         border: black;
-        background-color: blanchedalmond;
+        color:#000;
+        background:#ffc;
+        display:block;
+        height:10em;
+        width:10em;
+        padding:1em;
+        box-shadow: 5px 5px 7px rgba(33,33,33,.7);
     }
 
 

@@ -16,19 +16,25 @@
 	}
 	
 	let bboard = false;
-	let posts = []
-	fetch("/select-post"
+	let posts = [];
+	const loadPosts = () => {
+		let loadedPosts = [];
+		fetch("/select-post"
         ).then((result)=>{
             console.log("fetch in svelte 1: ", result)
             return result.json()
         }).then((result)=> {
             console.log("fetch in svelte 2: ", result)
 			result.forEach(element => {
-				posts.push(element)
+				loadedPosts.push(element)
+				posts = loadedPosts;
 			});
 			console.log("posts: ", posts)
 			bboard = true;
         })
+	}
+	loadPosts();
+	$: reactivePosts = posts
 	
 	let chosenId;
 	let chosenPost;
@@ -47,6 +53,11 @@
 		chosenPost = false;
 	}
 
+	const exitNewPost = () => {
+		console.log("exit new Post")
+		newPost = false;
+	}
+
 	let newPost = false;
 	const clickNewPost = () => {
 		console.log("newPost")
@@ -59,13 +70,13 @@
 	<h2 style="color: {nameColor}" on:mouseenter={changeColor}>BandMates</h2>
 	<div class="middle">
 		{#if bboard}
-			<Blackboard posts = {posts} on:choose-post={chooseId}/>
+			<Blackboard posts = {reactivePosts} on:choose-post={chooseId}/>
 		{/if}
 		{#if chosenPost}
 			<BigPost {chosenPost} on:exit-post={exitPost} />
 		{/if}
 		{#if newPost}
-			<NewPost />
+			<NewPost on:exit-new-post={()=> {exitNewPost(); loadPosts()}} />
 		{/if}
 	</div>
 	<button on:click={clickNewPost}>New Post</button>
@@ -77,9 +88,7 @@
 		height: 100vh;
 		width: 100vw;
 		text-align: center;
-		padding: 1em;
 		max-width: 240px;
-		margin: 0 auto;
 		display: grid;;
 		grid-template-rows: 1fr 8fr 1fr;
 	}
