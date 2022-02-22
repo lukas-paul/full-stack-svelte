@@ -43,6 +43,15 @@ app.post("/add-new-post", (req, res) => {
     });
 });
 
+app.get("/filter-posts/:city", (req, res) => {
+    console.log("filter posts: ", req.params.city);
+    let city = req.params.city;
+    db.filterPosts(city).then((results) => {
+        console.log("results from filter: ", results.rows);
+        res.json(results.rows);
+    });
+});
+
 /*
 app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "public", "index.html"));

@@ -24,3 +24,11 @@ module.exports.newPost = (name, city, title, text) => {
         params
     );
 };
+
+module.exports.filterPosts = (city) => {
+    let params = [city];
+    return db.query(
+        `SELECT * FROM posts WHERE city=$1 ORDER BY id DESC LIMIT 10`,
+        params
+    );
+};

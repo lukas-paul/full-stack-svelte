@@ -2,6 +2,7 @@
 	import Blackboard from "./components/Blackboard.svelte"
 	import BigPost from "./components/BigPost.svelte"
 	import NewPost from "./components/NewPost.svelte"
+	import Filter from "./components/Filter.svelte"
 	import { onMount } from "svelte"
 
 	let color = "red"
@@ -63,11 +64,31 @@
 		console.log("newPost")
 		newPost = true;
 	}
-	
+
+	const filterPosts = (e) => {
+		let filteredPosts = [];
+		console.log("filterPosts: ", e.detail)
+		//send chosen city to server
+		fetch(`/filter-posts/${e.detail}`).then((results)=> {
+			return results.json()
+		}).then((results)=> {
+			console.log("results in filteredPosts: ", results)
+			results.forEach(element => {
+				filteredPosts.push(element)
+				posts = filteredPosts;
+				console.log("posts in filtered: ", posts)
+			});
+		})
+		
+	}	
 </script>
 
 <main>
 	<h2 style="color: {nameColor}" on:mouseenter={changeColor}>BandMates</h2>
+	<div class="filter">
+		<Filter on:filter-posts={filterPosts}/>
+	</div>
+	
 	<div class="middle">
 		{#if bboard}
 			<Blackboard posts = {reactivePosts} on:choose-post={chooseId}/>
@@ -90,7 +111,7 @@
 		text-align: center;
 		max-width: 240px;
 		display: grid;;
-		grid-template-rows: 1fr 8fr 1fr;
+		grid-template-rows: 0.5fr 0.5fr 8fr 1fr;
 	}
 
 	h2 {
@@ -101,11 +122,22 @@
 	}
 
 	.middle {
-		grid-row: 2;
+		grid-row: 3;
+		overflow-y: auto;
+		background-color: lightgrey;
 	}
 
 	button {
-		grid-row: 3
+		grid-row: 4
+	}
+
+	.filter {
+		grid-row: 2;
+		height: 100%;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
 	}
 
 	@media (min-width: 640px) {
