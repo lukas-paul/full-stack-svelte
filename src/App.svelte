@@ -69,7 +69,13 @@
 		let filteredPosts = [];
 		console.log("filterPosts: ", e.detail)
 		//send chosen city to server
-		fetch(`/filter-posts/${e.detail}`).then((results)=> {
+		fetch(`/filter-posts`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(e.detail),
+        }).then((results)=> {
 			return results.json()
 		}).then((results)=> {
 			console.log("results in filteredPosts: ", results)
@@ -84,7 +90,7 @@
 </script>
 
 <main>
-	<h2 style="color: {nameColor}" on:mouseenter={changeColor}>BandMates</h2>
+	<h2 class="banner" style="color: {nameColor}" on:mouseenter={changeColor}>BandMates</h2>
 	<div class="filter">
 		<Filter on:filter-posts={filterPosts}/>
 	</div>
@@ -114,9 +120,9 @@
 		grid-template-rows: 0.5fr 0.5fr 8fr 1fr;
 	}
 
-	h2 {
+	.banner {
 		color: purple;
-		font-size: 4em;
+		font-size: 3em;
 		font-weight: 100;
 		grid-row: 1;
 	}
@@ -124,7 +130,7 @@
 	.middle {
 		grid-row: 3;
 		overflow-y: auto;
-		background-color: lightgrey;
+		background-color: white;
 	}
 
 	button {
@@ -132,12 +138,19 @@
 	}
 
 	.filter {
+		justify-self: end;
+		width: 50vw;
+		right: 5px;
 		grid-row: 2;
-		height: 100%;
+		height: 80%;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: space-around;
+		border: 1px black solid;
+		margin-bottom: 5px;
+		border-radius: 10px;
+		transform: translateX(-10px);
 	}
 
 	@media (min-width: 640px) {

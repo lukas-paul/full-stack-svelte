@@ -17,10 +17,10 @@ module.exports.choosePost = (id) => {
     return db.query(`SELECT * FROM posts WHERE id=$1`, params);
 };
 
-module.exports.newPost = (name, city, title, text) => {
-    let params = [name, city, title, text];
+module.exports.newPost = (name, city, genre, title, text) => {
+    let params = [name, city, genre, title, text];
     return db.query(
-        `INSERT INTO posts (username, city, headline, post) VALUES ($1, $2, $3, $4)`,
+        `INSERT INTO posts (username, city, genre, headline, post) VALUES ($1, $2, $3, $4, $5)`,
         params
     );
 };

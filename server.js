@@ -35,18 +35,21 @@ app.post("/add-new-post", (req, res) => {
     console.log("add new post in server: ", req.body);
     let name = req.body.name;
     let city = req.body.city;
+    let genre = req.body.genre;
     let title = req.body.title;
     let text = req.body.text;
 
-    db.newPost(name, city, title, text).then(() => {
+    db.newPost(name, city, genre, title, text).then(() => {
         res.json({ success: "post added to db" });
     });
 });
 
-app.get("/filter-posts/:city", (req, res) => {
-    console.log("filter posts: ", req.params.city);
-    let city = req.params.city;
-    db.filterPosts(city).then((results) => {
+app.post("/filter-posts", (req, res) => {
+    console.log("filter posts: ", req.body);
+    let city = req.body.city;
+    let genre = req.body.genre;
+
+    db.filterPosts(city, genre).then((results) => {
         console.log("results from filter: ", results.rows);
         res.json(results.rows);
     });

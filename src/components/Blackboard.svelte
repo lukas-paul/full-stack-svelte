@@ -39,7 +39,7 @@
     .post {     
         border: black;
         color:#000;
-        background:#ffc;
+        background: white;
         display:block;
         height:10em;
         width:10em;
