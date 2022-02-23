@@ -25,10 +25,28 @@ module.exports.newPost = (name, city, genre, title, text) => {
     );
 };
 
-module.exports.filterPosts = (city) => {
-    let params = [city];
-    return db.query(
-        `SELECT * FROM posts WHERE city=$1 ORDER BY id DESC LIMIT 10`,
-        params
-    );
+module.exports.filterPosts = (city, genre) => {
+    let params;
+    if (city && !genre) {
+        console.log("city filter");
+        params = [city];
+        return db.query(
+            `SELECT * FROM posts WHERE city=$1 ORDER BY id DESC LIMIT 10`,
+            params
+        );
+    } else if (city && genre) {
+        params = [city, genre];
+        console.log("city and genre filter");
+        return db.query(
+            `SELECT * FROM posts WHERE city=$1 AND genre=$2 ORDER BY id DESC LIMIT 10`,
+            params
+        );
+    } else if (!city && genre) {
+        params = [genre];
+        console.log("genre filter: ", params);
+        return db.query(
+            `SELECT * FROM posts WHERE genre=$1 ORDER BY id DESC LIMIT 10`,
+            params
+        );
+    }
 };

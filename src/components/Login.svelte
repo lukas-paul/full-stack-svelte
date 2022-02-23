@@ -17,20 +17,17 @@
     }
 
     const exit = () => {
-        dispatch("exit-new-post")
+        dispatch("exit-login")
     }
 
 </script>
 
 <div class="indiv-post">
     <div class="post-center">
-        <h2>New Post</h2>
-        <input type="text" name="name" placeholder="Your name" on:input={(e) => newPost.name = e.target.value}>
-        <input type="text" name="city" placeholder="Your city" on:input={(e) => newPost.city = e.target.value}>
-        <input type="text" name="genre" placeholder="Your genre" on:input={(e) => newPost.genre = e.target.value}>
-        <input type="text" name="title" placeholder="Title of your post" on:input={(e) => newPost.title = e.target.value}>
-        <input type="text" name="text" placeholder="Your text" on:input={(e) => newPost.text = e.target.value}>
-        <button on:click={submit}>Submit</button>
+        <h2>Login</h2>
+        <input type="text" name="email" placeholder="Your email" on:input={(e) => newPost.name = e.target.value}>
+        <input type="text" name="password" placeholder="Your password" on:input={(e) => newPost.city = e.target.value}>
+        <button on:click={submit}>Login</button>
         <div class="exit-button" on:click={exit}>
            <div class="x">X</div>
         </div>

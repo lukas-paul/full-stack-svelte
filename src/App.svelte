@@ -3,7 +3,11 @@
 	import BigPost from "./components/BigPost.svelte"
 	import NewPost from "./components/NewPost.svelte"
 	import Filter from "./components/Filter.svelte"
-	import { onMount } from "svelte"
+	import Login from "./components/Login.svelte"
+	import url from './url'
+	console.log("url: ", url)
+	import { Router, Link, Route } from "svelte-navigator";
+
 
 	let color = "red"
 	$: nameColor = color
@@ -41,17 +45,28 @@
 	let chosenPost;
 	const chooseId = (e) => {
 		console.log("event.detail: " , e.detail)
-		chosenId = e.detail;
+		chosenId = e.detail || window.location.href.split("/").pop();;
 		fetch(`/choose-post/${chosenId}`).then((result)=>{
 			return result.json()
 		}).then((result)=> {
 			console.log("result from choose post: ", result)
 			chosenPost = result
+			window.history.replaceState({}, '',`#/post/${chosenId}`);
 		})
 			
 	}
+
+	let linkedPost = window.location.href.split("/").pop();
+	console.log(linkedPost)
+	if (!chosenPost && linkedPost) {
+		chooseId(linkedPost)
+	}
+	
+
+
 	const exitPost = () => {
 		chosenPost = false;
+		window.history.replaceState({}, '','/');
 	}
 
 	const exitNewPost = () => {
@@ -65,6 +80,7 @@
 		newPost = true;
 	}
 
+	let noResults = false;
 	const filterPosts = (e) => {
 		let filteredPosts = [];
 		console.log("filterPosts: ", e.detail)
@@ -81,15 +97,31 @@
 			console.log("results in filteredPosts: ", results)
 			results.forEach(element => {
 				filteredPosts.push(element)
+				if (filteredPosts.length<1) {
+					noResults = true;
+				} else {
 				posts = filteredPosts;
 				console.log("posts in filtered: ", posts)
+				}
 			});
 		})
 		
 	}	
+
+	const exitLogin = () => {
+		console.log("exit login")
+		window.history.replaceState({}, '','/');
+	}
 </script>
 
 <main>
+	<nav>
+		<a class="login-button" href="#/login">Login</a> 
+	</nav>
+	
+		
+	
+	
 	<h2 class="banner" style="color: {nameColor}" on:mouseenter={changeColor}>BandMates</h2>
 	<div class="filter">
 		<Filter on:filter-posts={filterPosts}/>
@@ -99,11 +131,14 @@
 		{#if bboard}
 			<Blackboard posts = {reactivePosts} on:choose-post={chooseId}/>
 		{/if}
-		{#if chosenPost}
+		{#if chosenPost && $url.hash === `#/post/${chosenId}`}
 			<BigPost {chosenPost} on:exit-post={exitPost} />
 		{/if}
 		{#if newPost}
 			<NewPost on:exit-new-post={()=> {exitNewPost(); loadPosts()}} />
+		{/if}
+		{#if $url.hash === "#/login"}
+			<Login on:exit-login={exitLogin}/>	
 		{/if}
 	</div>
 	<button on:click={clickNewPost}>New Post</button>

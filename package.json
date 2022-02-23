@@ -21,6 +21,7 @@
         "cors": "^2.8.5",
         "express": "^4.17.3",
         "sirv-cli": "^2.0.0",
-        "spiced-pg": "^1.0.4"
+        "spiced-pg": "^1.0.4",
+        "svelte-navigator": "^3.1.5"
     }
 }

@@ -17,10 +17,12 @@
 
 <div class="blackboard">
 {#each posts as post (post.id)}
-    <div class="post" on:click={choosePost(post.id)}>
-        <p>{post.username}</p>
-        <p>{post.headline}</p>
-    </div>  
+    
+        <div class="post" on:click={choosePost(post.id)}>
+            <p>{post.username}</p>
+            <p>{post.headline}</p>
+        </div>  
+    
 {/each}
 </div>
 

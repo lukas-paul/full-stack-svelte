@@ -10,9 +10,11 @@
 
 <div class="indiv-post">
     <div class="post-center">
+        <div class="post-area">
         <div class="name">User: {chosenPost.username}</div>
         <div class="headline">Title: {chosenPost.headline}</div>
         <div class="text">Post: {chosenPost.post}</div>
+    </div>
     <button class="exit-button" on:click={exitPost}>X</button>
     </div>
 </div>
@@ -25,7 +27,7 @@
         width: 100vw;
         height: 100vh;
         background-color: rgba(0,0,0,0.5);
-
+        
     }
     .post-center {
         position: absolute;
@@ -38,5 +40,15 @@
         opacity: 1;
         z-index: 10;
         border-radius: 10px;
+        display: grid;
+        grid-template-rows: 2fr 1fr;
     }
+
+    .post-area {
+        grid-row: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
 </style>
